@@ -3,26 +3,29 @@ import Link from "next/link";
 import { Button } from "../ui/button";
 import ProductCategoriesDropdown from "./product-caterories-dropdown";
 import { PRODUCT_CATEGORIES } from "@/lib/constants";
+import SearchProduct from "./SearchProduct";
+import { IconShoppingBag } from "@tabler/icons-react";
+import ModeToggle from "./theme-toggle";
 
 const NavigationBar = () => {
   return (
-    <nav className="bg-gradient-to-b from-blue-500/50 from-10% to-white to-120% border-b border-gray-400">
-      <div className="container mx-auto py-2 space-y-8">
-        <div className="flex items-center justify-between">
-          <Image
-            src="/logo.svg"
-            height={10}
-            width={10}
-            className="h-12 w-auto"
-            alt="logo"
-          />
-          <div>
-            <Link href="/sign-up">
-              <Button>Sign up</Button>
-            </Link>
-          </div>
+    <nav className="border-b border-gray-400">
+      <div className="flex items-center justify-between container mx-auto py-2">
+        <div className="flex items-center gap-2">
+          <h2 className="text-2xl font-bold leading-0!">E-STORE</h2>
+          <IconShoppingBag />
         </div>
-        <ProductCategoriesDropdown categories={PRODUCT_CATEGORIES} />
+        <div className="flex items-center gap-4">
+          <ProductCategoriesDropdown categories={PRODUCT_CATEGORIES} />
+          <SearchProduct />
+        </div>
+
+        <div className="flex items-center gap-4">
+          <ModeToggle />
+          <Link href="/sign-up">
+            <Button>Sign up</Button>
+          </Link>
+        </div>
       </div>
     </nav>
   );

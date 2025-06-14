@@ -1,26 +1,9 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
+import { Outfit } from "next/font/google";
 import "./globals.css";
-
-const font = localFont({
-  src: [
-    {
-      path: "../public/fonts/circular.ttf",
-      weight: "400",
-      style: "normal",
-    },
-    {
-      path: "../public/fonts/circular-medium.ttf",
-      weight: "500",
-      style: "medium",
-    },
-    {
-      path: "../public/fonts/circular-bold.ttf",
-      weight: "700",
-      style: "bold",
-    },
-  ],
-  display: "swap", // Optional, controls how the font is displayed
+import { ThemeProvider } from "next-themes";
+const font = Outfit({
+  subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
@@ -34,8 +17,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${font.className} antialiased`}>{children}</body>
+    <html lang="en" suppressHydrationWarning>
+      <body className={`${font.className} antialiased`}>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="light"
+          enableSystem
+          disableTransitionOnChange
+        >
+          {/* <Toaster richColors position="top-right" /> */}
+          {children}
+        </ThemeProvider>
+      </body>
     </html>
   );
 }
