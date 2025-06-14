@@ -1,5 +1,12 @@
-import { Button } from "@/components/ui/button";
+import FeaturedProducts from "@/components/product/FeaturedProducts";
+import { getFeaturedProducts } from "@/lib/actions/product.actions";
 
-export default function Home() {
-  return <></>;
+export default async function Home() {
+  const featuredProducts = await getFeaturedProducts();
+
+  return (
+    <div>
+      <FeaturedProducts products={featuredProducts.data} />
+    </div>
+  );
 }
