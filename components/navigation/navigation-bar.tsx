@@ -9,8 +9,8 @@ import ModeToggle from "./theme-toggle";
 
 const NavigationBar = () => {
   return (
-    <nav className="border-b border-gray-400">
-      <div className="flex items-center justify-between container mx-auto py-2">
+    <nav className="shadow-sm sticky top-0 bg-white dark:bg-black dark:border-b dark:border-slate-700">
+      <div className="flex items-center justify-between container mx-auto py-3">
         <div className="flex items-center gap-2">
           <h2 className="text-2xl font-bold leading-0!">E-STORE</h2>
           <IconShoppingBag />
