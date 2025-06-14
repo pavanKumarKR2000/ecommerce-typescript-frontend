@@ -1,0 +1,16 @@
+"use server";
+import { redirect } from "next/navigation";
+// import { cookies } from "next/headers";
+//   const token = cookies().get('authToken')?.value
+import { api } from "../axios";
+export const getFeaturedProducts = async () => {
+  try {
+    const res = await api.get("/products/featured-products");
+    console.log("Res", res);
+    const featuredProducts = res.data;
+    return featuredProducts;
+  } catch (err) {
+    console.log(err);
+    redirect("/error");
+  }
+};
