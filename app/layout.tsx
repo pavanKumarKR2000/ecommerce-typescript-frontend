@@ -1,10 +1,27 @@
 import type { Metadata } from "next";
-import { Outfit, Space_Grotesk } from "next/font/google";
-import "./globals.css";
 import { ThemeProvider } from "next-themes";
-const font = Space_Grotesk({
+import { Outfit } from "next/font/google";
+// import localFont from "next/font/local";
+import "./globals.css";
+const font = Outfit({
   subsets: ["latin"],
+  weight: ["400"],
 });
+
+// const font = localFont({
+//   src: [
+//     {
+//       path: "../public/fonts/Gilroy-Regular.ttf",
+//       weight: "400",
+//       style: "normal",
+//     },
+//     {
+//       path: "../public/fonts/Gilroy-Bold.ttf",
+//       weight: "700",
+//       style: "bold",
+//     },
+//   ],
+// });
 
 export const metadata: Metadata = {
   title: "Create Next App",

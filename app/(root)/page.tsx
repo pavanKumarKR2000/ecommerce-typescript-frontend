@@ -1,3 +1,4 @@
+import EcommerceCircularAnimation from "@/components/ecommerce-circular-animation";
 import FeaturedProducts from "@/components/product/FeaturedProducts";
 import { getFeaturedProducts } from "@/lib/actions/product.actions";
 
@@ -7,6 +8,7 @@ export default async function Home() {
   return (
     <div>
       <FeaturedProducts products={featuredProducts.data} />
+      <EcommerceCircularAnimation />
     </div>
   );
 }
