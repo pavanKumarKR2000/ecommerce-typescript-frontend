@@ -21,29 +21,6 @@ import {
   IconTool,
 } from "@tabler/icons-react";
 
-// export const PRODUCT_CATEGORIES: Readonly<[string, ...string[]]> = [
-//   "Electronics",
-//   "Fashion",
-//   "Home & Garden",
-//   "Beauty & Personal Care",
-//   "Toys & Games",
-//   "Sports & Outdoors",
-//   "Automotive",
-//   "Health & Wellness",
-//   "Books, Movies & Music",
-//   "Office Supplies",
-//   "Pet Supplies",
-//   "Jewelry & Accessories",
-//   "Grocery & Gourmet Food",
-//   "Baby Products",
-//   "Tools & Home Improvement",
-//   "Furniture",
-//   "Party Supplies",
-//   "Watches",
-//   "Luggage & Bags",
-//   "Art & Craft Supplies",
-// ];
-
 export const PRODUCT_CATEGORIES = [
   { id: 1, name: "Electronics", icon: IconHeadphones },
   { id: 2, name: "Fashion", icon: IconShirt },
@@ -66,3 +43,6 @@ export const PRODUCT_CATEGORIES = [
   { id: 19, name: "Luggage & Bags", icon: IconBriefcase2 },
   { id: 20, name: "Art & Craft Supplies", icon: IconBrush },
 ];
+
+export const AUTH_ROUTES = ["/sign-in", "/sign-up"];
+export const PROTECTED_ROUTES = ["/user/profile", "/user/order"];
