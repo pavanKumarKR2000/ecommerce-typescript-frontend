@@ -1,7 +1,8 @@
+import { Toaster } from "@/components/ui/sonner";
 import type { Metadata } from "next";
 import { ThemeProvider } from "next-themes";
-import { Anonymous_Pro, Fragment_Mono, Spline_Sans } from "next/font/google";
-import localFont from "next/font/local";
+import { Spline_Sans } from "next/font/google";
+
 import "./globals.css";
 const font = Spline_Sans({
   subsets: ["latin"],
@@ -46,8 +47,8 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {/* <Toaster richColors position="top-right" /> */}
           {children}
+          <Toaster richColors position="top-right" />
         </ThemeProvider>
       </body>
     </html>
