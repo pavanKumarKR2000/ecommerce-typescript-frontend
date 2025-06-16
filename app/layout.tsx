@@ -1,22 +1,26 @@
 import type { Metadata } from "next";
 import { ThemeProvider } from "next-themes";
-import { Outfit } from "next/font/google";
-// import localFont from "next/font/local";
+import { Anonymous_Pro, Fragment_Mono, Spline_Sans } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
-const font = Outfit({
+const font = Spline_Sans({
   subsets: ["latin"],
-  weight: ["400"],
 });
 
 // const font = localFont({
 //   src: [
 //     {
-//       path: "../public/fonts/Gilroy-Regular.ttf",
+//       path: "../public/fonts/font-regular.ttf",
 //       weight: "400",
 //       style: "normal",
 //     },
 //     {
-//       path: "../public/fonts/Gilroy-Bold.ttf",
+//       path: "../public/fonts/font-medium.ttf",
+//       weight: "700",
+//       style: "medium",
+//     },
+//     {
+//       path: "../public/fonts/font-bold.ttf",
 //       weight: "700",
 //       style: "bold",
 //     },
