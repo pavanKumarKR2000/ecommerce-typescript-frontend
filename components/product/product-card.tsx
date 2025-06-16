@@ -2,6 +2,9 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Product } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
+import Price from "./Price";
+import { Badge } from "../ui/badge";
+import AddToCartButton from "./add-to-cart-button";
 
 interface ProductCardProps {
   product: Product;
@@ -22,20 +25,19 @@ const ProductCard = ({ product }: ProductCardProps) => {
           />
         </Link>
       </CardHeader>
-      <CardContent className="p-4 space-y-3">
+      <CardContent className="p-4 flex flex-col gap-3 items-start">
         {/* <div className="text-xs">{product.brand}</div> */}
         <Link href={""}>
-          <h2 className="text-sm font-medium">{product.name}</h2>
+          <h2 className="text-lg font-medium">{product.name}</h2>
         </Link>
-        <p>{product.price}</p>
-        {/* <div className="flex-between gap-4">
-          <Rating value={Number(product.rating)} />
-          {product.stock > 0 ? (
-            <ProductPrice value={Number(product.price)} />
-          ) : (
-            <p className="text-destructive">Out Of Stock</p>
-          )}
-        </div> */}
+        {product.inStock ? (
+          <Price price={product.price} />
+        ) : (
+          <Badge variant="destructive" className="font-bold text-lg">
+            Out of stock
+          </Badge>
+        )}
+        <AddToCartButton />
       </CardContent>
     </Card>
   );
