@@ -45,4 +45,4 @@ export const PRODUCT_CATEGORIES = [
 ];
 
 export const AUTH_ROUTES = ["/sign-in", "/sign-up"];
-export const PROTECTED_ROUTES = ["/user/profile", "/user/order"];
+export const PROTECTED_ROUTES = ["/user/profile", "/user/order", "/cart"];

@@ -16,7 +16,7 @@ import { Button } from "../ui/button";
 const UserMenu = () => {
   const { user } = useUserStore();
 
-  if (user) {
+  if (!user) {
     return (
       <Link href="/sign-up">
         <Button>Sign up</Button>
@@ -34,14 +34,16 @@ const UserMenu = () => {
       <DropdownMenuContent className="w-56" align="end" forceMount>
         <DropdownMenuItem className="hover:bg-white!">
           <div className="space-y-2">
-            <p className="font-medium">Pavan Kumar</p>
-            <p className="text-slate-500">pavan@gmail.com</p>
+            <p className="font-medium">{user.name}</p>
+            <p className="text-slate-500">{user.email}</p>
           </div>
         </DropdownMenuItem>
         <DropdownMenuItem>User profile</DropdownMenuItem>
         <DropdownMenuItem>Order history</DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>Log out</DropdownMenuItem>
+        <DropdownMenuItem>
+          <Button variant="ghost">Log out</Button>
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );

@@ -7,15 +7,18 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { signUpUser } from "@/lib/actions/auth.actions";
 import { signUpUserSchema } from "@/validators/auth.validator";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
+import { useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
-import { useActionState, useTransition } from "react";
-import { signUpUser } from "@/lib/actions/auth.actions";
+import { useUserStore } from "@/stores/userStore";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 const SignUpForm = () => {
   const {
@@ -27,14 +30,28 @@ const SignUpForm = () => {
   });
 
   const [isPending, startTransition] = useTransition();
+  const setUser = useUserStore((state) => state.setUser);
+  const router = useRouter();
 
   const onSubmit = ({
     name,
     email,
     password,
   }: z.infer<typeof signUpUserSchema>) => {
-    startTransition(() => {
-      signUpUser({ name, email, password });
+    startTransition(async () => {
+      const { success, message, data } = await signUpUser({
+        name,
+        email,
+        password,
+      });
+
+      if (success) {
+        toast.success(message);
+        // setUser(data!);
+        router.push("/");
+      } else {
+        toast.error(message);
+      }
     });
   };
 

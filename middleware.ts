@@ -6,7 +6,9 @@ import { AUTH_ROUTES, PROTECTED_ROUTES } from "./lib/constants";
 export function middleware(request: NextRequest) {
   const pathName = request.nextUrl.pathname;
 
-  const token = request.cookies.get("authToken")?.value;
+  console.log("cookie", request.cookies.get("accessToken"));
+
+  const token = request.cookies.get("accessToken")?.value;
   const isAuth = Boolean(token);
 
   if (isAuth && AUTH_ROUTES.includes(pathName)) {
@@ -23,5 +25,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/cart", "/user/:path*", "/sign-up", "/sign-in"], // Only run on these routes
+  matcher: ["/cart", "/user/:path*", "/sign-up", "/sign-in", "/cart"], // Only run on these routes
 };

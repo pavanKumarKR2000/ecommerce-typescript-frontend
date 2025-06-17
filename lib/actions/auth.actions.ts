@@ -1,9 +1,7 @@
 "use server";
-import { redirect } from "next/navigation";
-// import { cookies } from "next/headers";
-//   const token = cookies().get('authToken')?.value
+
 import { api } from "../axios";
-import { setTimeout } from "node:timers";
+import { cookies } from "next/headers";
 
 export const signUpUser = async ({
   name,
@@ -14,26 +12,35 @@ export const signUpUser = async ({
   email: string;
   password: string;
 }) => {
-  console.log({ name, email, password });
-
   try {
-    // const res = await api.get("/products/featured-products");
-    // const featuredProducts = res.data;
-    // return featuredProducts;
-    await new Promise((res, rej) => {
-      setTimeout(() => {
-        res("");
-      }, 5000);
+    const res = await api.post("/auth/sign-up", {
+      name,
+      email,
+      password,
     });
 
-    return {
-      success: true,
-      message: "user signed up successfully",
-      data: { id: 1, name, email, role: "user" },
-    };
+    const setCookie = res.headers["set-cookie"]?.[0];
+
+    if (setCookie) {
+      const [cookieNameValue] = setCookie.split(";");
+      const [name, value] = cookieNameValue.split("=");
+
+      (await cookies()).set({
+        name,
+        value,
+        httpOnly: true,
+        path: "/",
+        maxAge: 30 * 24 * 60 * 60,
+      });
+    }
+
+    return res.data;
   } catch (err) {
-    // console.log(err);
-    // redirect("/error");
+    return {
+      success: false,
+      message: "Something went wrong while signing up",
+      data: null,
+    };
   }
 };
 
@@ -44,25 +51,33 @@ export const signInUser = async ({
   email: string;
   password: string;
 }) => {
-  console.log({ email, password });
-
   try {
-    // const res = await api.get("/products/featured-products");
-    // const featuredProducts = res.data;
-    // return featuredProducts;
-    await new Promise((res, rej) => {
-      setTimeout(() => {
-        res("");
-      }, 5000);
+    const res = await api.post("/auth/sign-in", {
+      email,
+      password,
     });
 
-    return {
-      success: true,
-      message: "user signed up successfully",
-      data: { id: 1, email, role: "user" },
-    };
+    const setCookie = res.headers["set-cookie"]?.[0];
+
+    if (setCookie) {
+      const [cookieNameValue] = setCookie.split(";");
+      const [name, value] = cookieNameValue.split("=");
+
+      (await cookies()).set({
+        name,
+        value,
+        httpOnly: true,
+        path: "/",
+        maxAge: 30 * 24 * 60 * 60,
+      });
+    }
+
+    return res.data;
   } catch (err) {
-    // console.log(err);
-    // redirect("/error");
+    return {
+      success: false,
+      message: "Something went wrong while signing in",
+      data: null,
+    };
   }
 };

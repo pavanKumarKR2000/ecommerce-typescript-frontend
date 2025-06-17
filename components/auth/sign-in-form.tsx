@@ -15,6 +15,9 @@ import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { useTransition } from "react";
 import { signInUser } from "@/lib/actions/auth.actions";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
+import { useUserStore } from "@/stores/userStore";
 
 const SignInForm = () => {
   const {
@@ -26,10 +29,20 @@ const SignInForm = () => {
   });
 
   const [isPending, startTransition] = useTransition();
+  const router = useRouter();
+  const setUser = useUserStore((state) => state.setUser);
 
   const onSubmit = ({ email, password }: z.infer<typeof signInUserSchema>) => {
-    startTransition(() => {
-      signInUser({ email, password });
+    startTransition(async () => {
+      const { success, message, data } = await signInUser({ email, password });
+
+      if (success) {
+        toast.success(message);
+        setUser(data!);
+        router.push("/");
+      } else {
+        toast.error(message);
+      }
     });
   };
 
