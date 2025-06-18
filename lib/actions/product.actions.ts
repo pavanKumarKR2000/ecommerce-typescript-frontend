@@ -1,5 +1,4 @@
 "use server";
-import { redirect } from "next/navigation";
 // import { cookies } from "next/headers";
 //   const token = cookies().get('authToken')?.value
 import { api } from "../axios";
@@ -11,6 +10,5 @@ export const getFeaturedProducts = async () => {
     return featuredProducts;
   } catch (err) {
     console.log(err);
-    redirect("/error");
   }
 };

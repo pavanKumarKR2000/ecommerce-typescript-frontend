@@ -11,10 +11,12 @@ const NavigationBar = () => {
   return (
     <nav className="shadow-sm sticky top-0 bg-white dark:bg-black dark:border-b dark:border-slate-700 ">
       <div className="flex items-center justify-between container mx-auto py-3">
-        <div className="flex items-center gap-2">
-          <h2 className="text-2xl font-bold leading-0!">E-STORE</h2>
-          <IconShoppingBag />
-        </div>
+        <Link href="/">
+          <div className="flex items-center gap-2">
+            <h2 className="text-2xl font-bold leading-0!">E-STORE</h2>
+            <IconShoppingBag />
+          </div>
+        </Link>
         <div className="flex items-center gap-4">
           <ProductCategoriesDropdown categories={PRODUCT_CATEGORIES} />
           <SearchProduct />

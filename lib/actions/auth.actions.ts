@@ -81,3 +81,38 @@ export const signInUser = async ({
     };
   }
 };
+
+export const signOutUser = async () => {
+  const token = (await cookies()).get("accessToken")?.value;
+
+  try {
+    const res = await api.post(
+      "/auth/sign-out",
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        withCredentials: true,
+      },
+    );
+
+    (await cookies()).set({
+      name: "accessToken",
+      value: "",
+      httpOnly: true,
+      path: "/",
+      maxAge: 0,
+    });
+
+    return res.data;
+  } catch (err) {
+    console.log(err);
+
+    return {
+      success: false,
+      message: "Something went wrong while signing out",
+      data: null,
+    };
+  }
+};

@@ -7,21 +7,34 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Alert, AlertTitle } from "@/components/ui/alert";
 
 import { useUserStore } from "@/stores/userStore";
+import { IconAlertCircle, IconMinus, IconPlus } from "@tabler/icons-react";
 import Link from "next/link";
-import { Button } from "../ui/button";
-import { IconAlertCircle } from "@tabler/icons-react";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { Button } from "../ui/button";
 
 const AddToCartButton = () => {
   const { user } = useUserStore();
   const router = useRouter();
+  const [open, setOpen] = useState(false);
+  const [count, setCount] = useState(0);
+
+  const increment = () => {
+    setCount((prev) => prev + 1);
+  };
+
+  const decrement = () => {
+    if (count > 0) {
+      setCount((prev) => prev - 1);
+    }
+  };
 
   if (!user) {
     return (
-      <Dialog>
+      <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
           <Button variant="outline">Add</Button>
         </DialogTrigger>
@@ -35,19 +48,30 @@ const AddToCartButton = () => {
               </Alert>
             </DialogTitle>
           </DialogHeader>
-          <div className="w-full flex items-center justify-center">
+          <div className="w-full flex items-center justify-center gap-2">
             <Link href="/sign-in">
               <Button className="mx-auto">Sign in</Button>
             </Link>
+            <Button variant="outline" onClick={() => setOpen(false)}>
+              Cancel
+            </Button>
           </div>
         </DialogContent>
       </Dialog>
     );
   }
 
+  if (count === 0) {
+    <Button variant="outline" onClick={increment}>
+      Add
+    </Button>;
+  }
+
   return (
     <Button variant="outline" onClick={() => router.push("/cart")}>
-      Add
+      <IconPlus onClick={increment} />
+      {count}
+      <IconMinus onClick={decrement} />
     </Button>
   );
 };

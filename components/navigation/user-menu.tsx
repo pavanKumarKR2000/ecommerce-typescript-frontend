@@ -3,18 +3,34 @@
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { signOutUser } from "@/lib/actions/auth.actions";
 import { useUserStore } from "@/stores/userStore";
 import { IconUser } from "@tabler/icons-react";
 import Link from "next/link";
+import { useTransition } from "react";
+import { toast } from "sonner";
 import { Button } from "../ui/button";
 
 const UserMenu = () => {
-  const { user } = useUserStore();
+  const { user, clearUser } = useUserStore();
+  const [isPending, startTransition] = useTransition();
+
+  const onClick = () => {
+    startTransition(async () => {
+      const { success, message } = await signOutUser();
+
+      if (success) {
+        toast.success(message);
+        clearUser();
+      } else {
+        toast.error(message);
+      }
+    });
+  };
 
   if (!user) {
     return (
@@ -38,11 +54,18 @@ const UserMenu = () => {
             <p className="text-slate-500">{user.email}</p>
           </div>
         </DropdownMenuItem>
+        {user.role === "admin" && (
+          <DropdownMenuItem>
+            <Link href="/admin/products">Admin</Link>
+          </DropdownMenuItem>
+        )}
         <DropdownMenuItem>User profile</DropdownMenuItem>
         <DropdownMenuItem>Order history</DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem>
-          <Button variant="ghost">Log out</Button>
+          <Button variant="ghost" onClick={onClick} disabled={isPending}>
+            {isPending ? "Logging out..." : "Log out"}
+          </Button>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
