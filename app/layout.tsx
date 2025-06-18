@@ -2,6 +2,7 @@ import { Toaster } from "@/components/ui/sonner";
 import type { Metadata } from "next";
 import { ThemeProvider } from "next-themes";
 import { Spline_Sans } from "next/font/google";
+import localFont from "next/font/local";
 
 import "./globals.css";
 const font = Spline_Sans({
@@ -11,17 +12,17 @@ const font = Spline_Sans({
 // const font = localFont({
 //   src: [
 //     {
-//       path: "../public/fonts/font-regular.ttf",
+//       path: "../public/fonts/input-regular.ttf",
 //       weight: "400",
 //       style: "normal",
 //     },
+//     // {
+//     //   path: "../public/fonts/font-medium.ttf",
+//     //   weight: "700",
+//     //   style: "medium",
+//     // },
 //     {
-//       path: "../public/fonts/font-medium.ttf",
-//       weight: "700",
-//       style: "medium",
-//     },
-//     {
-//       path: "../public/fonts/font-bold.ttf",
+//       path: "../public/fonts/input-bold.ttf",
 //       weight: "700",
 //       style: "bold",
 //     },
