@@ -1,7 +1,9 @@
 "use client";
 import {
   Dialog,
+  DialogClose,
   DialogContent,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -12,14 +14,12 @@ import { Alert, AlertTitle } from "@/components/ui/alert";
 import { useUserStore } from "@/stores/userStore";
 import { IconAlertCircle, IconMinus, IconPlus } from "@tabler/icons-react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Button } from "../ui/button";
 
 const AddToCartButton = () => {
   const { user } = useUserStore();
-  const router = useRouter();
-  const [open, setOpen] = useState(false);
+
   const [count, setCount] = useState(0);
 
   const increment = () => {
@@ -34,28 +34,31 @@ const AddToCartButton = () => {
 
   if (!user) {
     return (
-      <Dialog open={open} onOpenChange={setOpen}>
+      <Dialog>
         <DialogTrigger asChild>
           <Button variant="outline">Add</Button>
         </DialogTrigger>
         <DialogContent className="max-w-md! ">
           <DialogHeader className="mt-4">
             <DialogTitle>
-              <Alert variant="destructive">
-                <AlertTitle className="flex items-center justify-center gap-2 font-medium!">
-                  <IconAlertCircle /> Please Sign in before adding to cart
+              <Alert variant="destructive" className="border-none!">
+                <AlertTitle className="flex items-center justify-center gap-2 font-medium! text-lg">
+                  <IconAlertCircle />
+                  <span>Please Sign in before adding to cart</span>
                 </AlertTitle>
               </Alert>
             </DialogTitle>
           </DialogHeader>
-          <div className="w-full flex items-center justify-center gap-2">
-            <Link href="/sign-in">
-              <Button className="mx-auto">Sign in</Button>
-            </Link>
-            <Button variant="outline" onClick={() => setOpen(false)}>
-              Cancel
-            </Button>
-          </div>
+          <DialogFooter className="w-full flex items-center justify-center gap-2">
+            <div className="w-full flex items-center justify-center gap-2">
+              <Link href="/sign-in">
+                <Button className="mx-auto">Sign in</Button>
+              </Link>
+              <DialogClose asChild>
+                <Button variant="outline">Cancel</Button>
+              </DialogClose>
+            </div>
+          </DialogFooter>
         </DialogContent>
       </Dialog>
     );

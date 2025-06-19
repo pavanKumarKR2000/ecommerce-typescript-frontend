@@ -1,13 +1,13 @@
 import { Toaster } from "@/components/ui/sonner";
 import type { Metadata } from "next";
 import { ThemeProvider } from "next-themes";
-import { Spline_Sans, Andika } from "next/font/google";
+import { Spline_Sans, Andika, Inria_Sans } from "next/font/google";
 import localFont from "next/font/local";
 
 import "./globals.css";
-const font = Andika({
+const font = Inria_Sans({
   subsets: ["latin"],
-  weight: ["400", "700"],
+  weight: ["400"],
 });
 
 // const font = localFont({

@@ -46,3 +46,13 @@ export const PRODUCT_CATEGORIES = [
 
 export const AUTH_ROUTES = ["/sign-in", "/sign-up"];
 export const PROTECTED_ROUTES = ["/user/profile", "/user/order", "/cart"];
+export const MODE_INFO = {
+  add: {
+    title: "Add product",
+    pendingTitle: "Adding product...",
+  },
+  update: {
+    title: "Update product",
+    pendingTitle: "Updating product...",
+  },
+};

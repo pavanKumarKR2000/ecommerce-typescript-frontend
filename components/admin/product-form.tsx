@@ -20,7 +20,7 @@ import {
   updateProductSchema,
 } from "@/validators/product.validator";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { IconX } from "@tabler/icons-react";
+import { IconLoader, IconX } from "@tabler/icons-react";
 import Image from "next/image";
 import { useEffect, useState, useTransition } from "react";
 import { Controller, useForm } from "react-hook-form";
@@ -40,6 +40,20 @@ interface ProductForm {
 }
 
 const ProductForm = ({ closeDialog, mode, id }: ProductForm) => {
+  const title = MODE_INFO[mode].title;
+  const pendingTitle = MODE_INFO[mode].pendingTitle;
+
+  const [imageFiles, setImageFiles] = useState<
+    { id: number; img: File }[] | []
+  >([]);
+  const [preview, setPreview] = useState<{ id: number; img: string }[] | []>(
+    [],
+  );
+  const [payload, setPayload] = useState<any>(null);
+  const [imageUrls, setImageUrls] = useState<string[] | []>([]);
+  const [isPending, startTransition] = useTransition();
+  const [isLoadingProducts, setIsLoadingProducts] = useState(false);
+
   const {
     register,
     control,
@@ -53,10 +67,12 @@ const ProductForm = ({ closeDialog, mode, id }: ProductForm) => {
       mode === "add"
         ? {
             isFeatured: false,
+            stock: 10,
           }
         : async () => {
+            setIsLoadingProducts(true);
             const { data } = await getProduct(id as number);
-
+            setIsLoadingProducts(false);
             return {
               name: data.name as string,
               description: data.description as string,
@@ -68,19 +84,6 @@ const ProductForm = ({ closeDialog, mode, id }: ProductForm) => {
             };
           },
   });
-
-  const title = MODE_INFO[mode].title;
-  const pendingTitle = MODE_INFO[mode].pendingTitle;
-
-  const [imageFiles, setImageFiles] = useState<
-    { id: number; img: File }[] | []
-  >([]);
-  const [preview, setPreview] = useState<{ id: number; img: string }[] | []>(
-    [],
-  );
-  const [payload, setPayload] = useState<any>(null);
-  const [imageUrls, setImageUrls] = useState<string[] | []>([]);
-  const [isPending, startTransition] = useTransition();
 
   useEffect(() => {
     if (imageUrls.length && payload) {
@@ -143,7 +146,9 @@ const ProductForm = ({ closeDialog, mode, id }: ProductForm) => {
     }
   };
 
-  const onSubmitForm = async (product: z.infer<typeof createProductSchema>) => {
+  const onSubmitForm = async (
+    product: z.infer<typeof createProductSchema | typeof updateProductSchema>,
+  ) => {
     if (mode === "add") {
       if (imageFiles?.length) {
         try {
@@ -163,14 +168,21 @@ const ProductForm = ({ closeDialog, mode, id }: ProductForm) => {
       }
     } else {
       try {
-        const { success, message } = await updateProduct(product);
+        startTransition(async () => {
+          const payload = { ...product, slug: slugify(product.name) };
 
-        if (success) {
-          toast.success(message);
-          closeDialog();
-        } else {
-          toast.error(message);
-        }
+          const { success, message } = await updateProduct(
+            id as number,
+            payload,
+          );
+
+          if (success) {
+            toast.success(message);
+            closeDialog();
+          } else {
+            toast.error(message);
+          }
+        });
       } catch (err) {
         toast.error("Something went wrong while updating product");
       }
@@ -184,7 +196,7 @@ const ProductForm = ({ closeDialog, mode, id }: ProductForm) => {
 
   return (
     <form
-      className="grid grid-cols-1 md:grid-cols-2 gap-4"
+      className="grid grid-cols-1 md:grid-cols-2 gap-4 relative"
       onSubmit={handleSubmit(onSubmitForm)}
     >
       {/** product name */}
@@ -340,6 +352,11 @@ const ProductForm = ({ closeDialog, mode, id }: ProductForm) => {
       >
         {isPending ? pendingTitle : title}
       </Button>
+      {isLoadingProducts && (
+        <div className="absolute inset-0 flex items-center justify-center bg-white/50 dark:bg-dark/50">
+          <IconLoader className="size-6 animate-spin" />
+        </div>
+      )}
     </form>
   );
 };
