@@ -1,0 +1,52 @@
+import { create } from "zustand";
+import { persist } from "zustand/middleware";
+
+interface CartItem {
+  id: number;
+  quantity: number;
+}
+
+interface CartStore {
+  cart: CartItem[] | [];
+  totalQuantity: number;
+  setCartItem: (id: number, quantity: number) => void;
+  clearCartItem: () => void;
+}
+
+export const useCartStore = create<CartStore>()(
+  persist(
+    (set) => ({
+      cart: [],
+      totalQuantity: 0,
+      setCartItem: (id: number, quantity: number) =>
+        set((state) => {
+          const cartItem = state.cart.find((item) => item.id === id);
+          let newCart = [];
+
+          if (cartItem) {
+            newCart = [
+              ...state.cart.filter((item) => item.id !== id),
+              { id, quantity },
+            ];
+          } else {
+            newCart = [...state.cart, { id, quantity }];
+          }
+
+          let totalQuantity = 0;
+
+          newCart.forEach((item) => {
+            totalQuantity += item.quantity;
+          });
+
+          set({ totalQuantity });
+
+          return { cart: newCart };
+        }),
+      clearCartItem: () => set({ cart: [] }),
+    }),
+    {
+      name: "cart-store", // key in localStorage
+      // storage: typeof window !== "undefined" ? localStorage : undefined,
+    },
+  ),
+);
