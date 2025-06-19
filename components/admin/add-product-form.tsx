@@ -7,14 +7,17 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { addProduct } from "@/lib/actions/product.actions";
 import { PRODUCT_CATEGORIES } from "@/lib/constants";
 import { useUploadThing } from "@/lib/uploadthing";
+import { slugify } from "@/lib/utils";
 import { createProductSchema } from "@/validators/product.validator";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { IconX } from "@tabler/icons-react";
 import Image from "next/image";
-import { useRef, useState } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { Controller, useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { z } from "zod";
 import { Button } from "../ui/button";
 import { Checkbox } from "../ui/checkbox";
@@ -22,8 +25,12 @@ import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { ScrollArea } from "../ui/scroll-area";
 import { Textarea } from "../ui/textarea";
-import { toast } from "sonner";
-const AddProductForm = () => {
+
+interface AddProductForm {
+  closeDialog: () => void;
+}
+
+const AddProductForm = ({ closeDialog }: AddProductForm) => {
   const {
     register,
     control,
@@ -36,12 +43,50 @@ const AddProductForm = () => {
     },
   });
 
-  const imageInputRef = useRef(null);
+  const [imageFiles, setImageFiles] = useState<
+    { id: number; img: File }[] | []
+  >([]);
+
+  const [preview, setPreview] = useState<{ id: number; img: string }[] | []>(
+    [],
+  );
+
+  const [payload, setPayload] = useState<any>(null);
+
+  const [imageUrls, setImageUrls] = useState<string[] | []>([]);
+  const [isPending, startTransition] = useTransition();
+
+  useEffect(() => {
+    if (imageUrls.length && payload) {
+      try {
+        startTransition(async () => {
+          const { success, message } = await addProduct({
+            ...payload,
+            images: imageUrls,
+          });
+
+          if (success) {
+            toast.success(message);
+            setPayload(null);
+            setImageUrls([]);
+            setPreview([]);
+            closeDialog();
+          } else {
+            toast.error(message);
+          }
+        });
+      } catch (err) {
+        toast.error("Something went wrong while adding product");
+      }
+    }
+  }, [imageUrls, payload]);
 
   const { startUpload } = useUploadThing("productImage", {
-    onClientUploadComplete: () => {
-      //
-      alert("upload complete");
+    onClientUploadComplete: (res) => {
+      if (res) {
+        const urls = res.map((file) => file.url);
+        setImageUrls(() => urls);
+      }
     },
     onUploadError: (err) => {
       console.log("err", err);
@@ -51,14 +96,6 @@ const AddProductForm = () => {
       //
     },
   });
-
-  const [imageFiles, setImageFiles] = useState<
-    { id: number; img: File }[] | []
-  >([]);
-
-  const [preview, setPreview] = useState<{ id: number; img: string }[] | []>(
-    [],
-  );
 
   const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
@@ -80,12 +117,19 @@ const AddProductForm = () => {
     }
   };
 
-  const onSubmitForm = async (data: z.infer<typeof createProductSchema>) => {
-    console.log("Data", data);
-    if (imageFiles?.length > 0) {
+  const onSubmitForm = async (product: z.infer<typeof createProductSchema>) => {
+    if (imageFiles?.length) {
       try {
-        const res = await startUpload(imageFiles.map((item) => item.img));
-        console.log("res", res);
+        startTransition(async () => {
+          await startUpload(imageFiles.map((item) => item.img));
+
+          const payload = {
+            ...product,
+            slug: slugify(product.name),
+          };
+
+          setPayload(payload);
+        });
       } catch (err) {
         toast.error("Something went wrong while uploading images");
       }
@@ -218,7 +262,6 @@ const AddProductForm = () => {
           accept="image/*"
           onChange={onFileChange}
           multiple
-          ref={imageInputRef}
         />
         {preview.length > 0 && (
           <ScrollArea className="w-full  h-[150px]">
@@ -246,8 +289,13 @@ const AddProductForm = () => {
         )}
       </div>
 
-      <Button type="submit" className="col-span-2 mt-6">
-        Add product
+      <Button
+        type="submit"
+        className="col-span-2 mt-6"
+        isLoading={isPending}
+        disabled={isPending}
+      >
+        {isPending ? "Adding product..." : "Add product"}
       </Button>
     </form>
   );

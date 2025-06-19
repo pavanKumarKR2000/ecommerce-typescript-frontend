@@ -6,8 +6,6 @@ import { AUTH_ROUTES, PROTECTED_ROUTES } from "./lib/constants";
 export function middleware(request: NextRequest) {
   const pathName = request.nextUrl.pathname;
 
-  console.log("cookie", request.cookies.get("accessToken"));
-
   const token = request.cookies.get("accessToken")?.value;
   const isAuth = Boolean(token);
 

@@ -47,7 +47,7 @@ const SignUpForm = () => {
 
       if (success) {
         toast.success(message);
-        // setUser(data!);
+        setUser(data!);
         router.push("/");
       } else {
         toast.error(message);

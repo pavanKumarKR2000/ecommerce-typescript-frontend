@@ -62,17 +62,23 @@ const AddToCartButton = () => {
   }
 
   if (count === 0) {
-    <Button variant="outline" onClick={increment}>
-      Add
-    </Button>;
+    return (
+      <Button variant="outline" onClick={increment}>
+        Add
+      </Button>
+    );
   }
 
   return (
-    <Button variant="outline" onClick={() => router.push("/cart")}>
-      <IconPlus onClick={increment} />
+    <div className="flex items-center gap-3 rounded-md  border  shadow-xs   dark:border-input ">
+      <Button variant="ghost" onClick={decrement}>
+        <IconMinus className="size-4" />
+      </Button>
       {count}
-      <IconMinus onClick={decrement} />
-    </Button>
+      <Button variant="ghost" onClick={increment}>
+        <IconPlus className="size-4" />
+      </Button>
+    </div>
   );
 };
 

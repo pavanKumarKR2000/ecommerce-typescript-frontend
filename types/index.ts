@@ -3,10 +3,12 @@ export type Product = {
   name: string;
   description: string;
   price: number;
-  inStock: boolean;
+  stock: boolean;
   category: string;
-  image: string | undefined | null;
+  images: string[] | [];
   rating: number;
-  featured: boolean;
+  isFeatured: boolean;
   createdAt: string | Date;
+  slug: string;
+  brand: string;
 };
