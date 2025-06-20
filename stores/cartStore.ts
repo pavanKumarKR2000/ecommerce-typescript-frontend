@@ -11,13 +11,18 @@ interface CartStore {
   totalQuantity: number;
   setCartItem: (id: number, quantity: number) => void;
   clearCartItem: () => void;
+  getCartItem: (id: number) => CartItem | undefined;
 }
 
 export const useCartStore = create<CartStore>()(
   persist(
-    (set) => ({
+    (set, get) => ({
       cart: [],
       totalQuantity: 0,
+      getCartItem: (id: number) => {
+        const cartItem = get().cart.find((item) => item.id === id);
+        return cartItem;
+      },
       setCartItem: (id: number, quantity: number) =>
         set((state) => {
           const cartItem = state.cart.find((item) => item.id === id);

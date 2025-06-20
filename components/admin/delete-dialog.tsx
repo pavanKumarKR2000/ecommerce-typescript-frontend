@@ -11,15 +11,27 @@ import {
 } from "@/components/ui/dialog";
 import { Alert, AlertTitle } from "../ui/alert";
 import { IconAlertCircle } from "@tabler/icons-react";
+import { SetStateAction } from "react";
 
 interface DeleteDialogProps {
   title: string;
+  id: number;
   action: (id: number) => void;
+  isLoading: boolean;
+  open: boolean;
+  setOpen: React.Dispatch<SetStateAction<boolean>>;
 }
 
-const DeleteDialog = ({ title, action }: DeleteDialogProps) => {
+const DeleteDialog = ({
+  title,
+  id,
+  action,
+  isLoading,
+  open,
+  setOpen,
+}: DeleteDialogProps) => {
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button variant="destructive">Delete</Button>
       </DialogTrigger>
@@ -36,7 +48,14 @@ const DeleteDialog = ({ title, action }: DeleteDialogProps) => {
         </DialogHeader>
         <DialogFooter className="w-full ">
           <div className="w-full flex items-center justify-center gap-2">
-            <Button variant="destructive">Delete</Button>
+            <Button
+              variant="destructive"
+              isLoading={isLoading}
+              disabled={isLoading}
+              onClick={() => action(id)}
+            >
+              Delete
+            </Button>
             <DialogClose asChild>
               <Button type="button" variant="outline">
                 Cancel

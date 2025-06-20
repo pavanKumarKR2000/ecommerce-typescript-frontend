@@ -16,18 +16,30 @@ import { IconAlertCircle, IconMinus, IconPlus } from "@tabler/icons-react";
 import Link from "next/link";
 import { useState } from "react";
 import { Button } from "../ui/button";
+import { useCartStore } from "@/stores/cartStore";
 
-const AddToCartButton = () => {
+interface AddToCartButtonProps {
+  id: number;
+}
+
+const AddToCartButton = ({ id }: AddToCartButtonProps) => {
   const { user } = useUserStore();
+  const { setCartItem, getCartItem } = useCartStore();
 
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState(() => {
+    const cartItem = getCartItem(id);
+
+    return cartItem ? cartItem.quantity : 0;
+  });
 
   const increment = () => {
+    setCartItem(id, count + 1);
     setCount((prev) => prev + 1);
   };
 
   const decrement = () => {
     if (count > 0) {
+      setCartItem(id, count - 1);
       setCount((prev) => prev - 1);
     }
   };

@@ -44,7 +44,7 @@ const UserMenu = () => {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="secondary">
-          <IconUser /> <span>user</span>
+          <IconUser />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56" align="end" forceMount>
@@ -56,7 +56,9 @@ const UserMenu = () => {
         </DropdownMenuItem>
         {user.role === "admin" && (
           <DropdownMenuItem>
-            <Link href="/admin/products">Admin</Link>
+            <Link href="/admin/products" className="w-full">
+              Admin
+            </Link>
           </DropdownMenuItem>
         )}
         <DropdownMenuItem>User profile</DropdownMenuItem>

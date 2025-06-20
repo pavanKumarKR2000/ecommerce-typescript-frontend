@@ -30,7 +30,7 @@ const AdminNavigationBar = () => {
 
   return (
     <nav className="shadow-sm sticky top-0 bg-white dark:bg-black dark:border-b dark:border-slate-700 ">
-      <div className="flex items-center justify-between container mx-auto py-3">
+      <div className="flex items-center justify-between container mx-auto py-4">
         <div className="flex items-center gap-10">
           <Link href="/">
             <div className="flex items-center gap-2">
