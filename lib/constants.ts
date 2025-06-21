@@ -10,15 +10,19 @@ import {
   IconCar,
   IconCat,
   IconConfetti,
+  IconCurrencyRupee,
   IconDeviceWatch,
   IconDiamond,
   IconHeadphones,
+  IconHeadset,
   IconHome,
   IconHorseToy,
   IconPencil,
   IconPerfume,
+  IconReceiptRupee,
   IconShirt,
   IconTool,
+  IconTruckDelivery,
 } from "@tabler/icons-react";
 
 export const PRODUCT_CATEGORIES = [
@@ -56,3 +60,30 @@ export const MODE_INFO = {
     pendingTitle: "Updating product...",
   },
 };
+
+export const FEATURES = [
+  {
+    id: 1,
+    icon: IconTruckDelivery,
+    feature: "Free Shipping",
+    description: "Free shipping on orders above ₹500",
+  },
+  {
+    id: 2,
+    icon: IconCurrencyRupee,
+    feature: "Money Back Guarantee",
+    description: "Within 30 days of purchase",
+  },
+  {
+    id: 3,
+    icon: IconReceiptRupee,
+    feature: "Flexible Payment",
+    description: "Pay with credit card or COD",
+  },
+  {
+    id: 4,
+    icon: IconHeadset,
+    feature: "24/7 Support",
+    description: "Get support at any time",
+  },
+];

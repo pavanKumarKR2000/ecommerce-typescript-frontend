@@ -25,7 +25,7 @@ interface AddToCartButtonProps {
 
 const AddToCartButton = ({ id, stock }: AddToCartButtonProps) => {
   const { user } = useUserStore();
-  const { setCartItem, getCartItem } = useCartStore();
+  const { setCartItem, getCartItem, removeCartItem } = useCartStore();
 
   const [count, setCount] = useState(() => {
     const cartItem = getCartItem(id);
@@ -40,7 +40,12 @@ const AddToCartButton = ({ id, stock }: AddToCartButtonProps) => {
 
   const decrement = () => {
     if (count > 0) {
-      setCartItem(id, count - 1);
+      if (count === 1) {
+        removeCartItem(id);
+      } else {
+        setCartItem(id, count - 1);
+      }
+
       setCount((prev) => prev - 1);
     }
   };

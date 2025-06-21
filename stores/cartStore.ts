@@ -12,6 +12,7 @@ interface CartStore {
   setCartItem: (id: number, quantity: number) => void;
   clearCartItem: () => void;
   getCartItem: (id: number) => CartItem | undefined;
+  removeCartItem: (id: number) => void;
 }
 
 export const useCartStore = create<CartStore>()(
@@ -47,11 +48,22 @@ export const useCartStore = create<CartStore>()(
 
           return { cart: newCart };
         }),
+      removeCartItem: (id: number) => {
+        const newCart = get().cart.filter((item) => item.id !== id);
+        let totalQuantity = 0;
+
+        newCart.forEach((item) => {
+          totalQuantity += item.quantity;
+        });
+
+        set({ totalQuantity });
+        set({ cart: newCart });
+      },
       clearCartItem: () => set({ cart: [] }),
     }),
     {
       name: "cart-store", // key in localStorage
       // storage: typeof window !== "undefined" ? localStorage : undefined,
-    },
-  ),
+    }
+  )
 );
