@@ -14,7 +14,7 @@ interface ProductCardProps {
 const ProductCard = ({ product }: ProductCardProps) => {
   return (
     <Card className="w-full max-w-sm p-0 overflow-hidden">
-      <CardHeader className="p-0 items-center">
+      <CardHeader className="p-0 items-center min-h-[250px]  overflow-hidden">
         <Link href={`/product/${product.slug}?id=${product.id}`}>
           <Image
             src={product?.images[0] || "/placeholder-product-image.svg"}
@@ -40,7 +40,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
             {product.category}
           </Badge>
         </div>
-        <Rating rating={product.rating} />
+        <Rating rating={product.rating} className="text-md" />
         <div className="flex items-center justify-between w-full">
           {product.stock ? (
             <Price price={product.price} />

@@ -13,14 +13,14 @@ import UserMenu from "./user-menu";
 
 const MobileMenu = () => {
   return (
-    <div className="inline-flex md:hidden">
+    <div className="inline-flex md:hidden z-20">
       <Sheet>
         <SheetTrigger>
           <IconMenu2 />
         </SheetTrigger>
         <SheetContent>
           <SheetTitle hidden></SheetTitle>
-          <div className="flex items-center justify-center gap-4 px-6 py-12">
+          <div className="flex items-center justify-center gap-6 px-6 py-12">
             <ModeToggle />
             <CartButton />
             <UserMenu />

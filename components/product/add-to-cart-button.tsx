@@ -94,7 +94,7 @@ const AddToCartButton = ({ id, stock }: AddToCartButtonProps) => {
       <Button variant="ghost" onClick={decrement}>
         <IconMinus className="size-4" />
       </Button>
-      {count}
+      <span className="w-3 text-center">{count}</span>
       <Button variant="ghost" onClick={increment}>
         <IconPlus className="size-4" />
       </Button>

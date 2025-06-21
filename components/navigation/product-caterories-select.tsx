@@ -33,21 +33,20 @@ const ProductCategoriesSelect = () => {
   }, [searchParams]);
 
   return (
-    <Select name="category" onValueChange={onValueChange} value={category}>
-      <SelectTrigger className="w-[240px]">
-        <SelectValue placeholder="Select category" />
-      </SelectTrigger>
-      <SelectContent>
-        {/* <SelectItem key="All" value="all">
-          All
-        </SelectItem> */}
-        {PRODUCT_CATEGORIES.map((item) => (
-          <SelectItem key={item.id} value={item.name}>
-            {item.name}
-          </SelectItem>
-        ))}
-      </SelectContent>
-    </Select>
+    <div className="hidden md:inline-flex">
+      <Select name="category" onValueChange={onValueChange} value={category}>
+        <SelectTrigger className="w-[240px]">
+          <SelectValue placeholder="Select category" />
+        </SelectTrigger>
+        <SelectContent>
+          {PRODUCT_CATEGORIES.map((item) => (
+            <SelectItem key={item.id} value={item.name}>
+              {item.name}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+    </div>
   );
 };
 
