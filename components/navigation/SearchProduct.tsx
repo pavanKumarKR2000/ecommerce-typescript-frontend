@@ -38,7 +38,12 @@ const SearchProduct = () => {
         onChange={(e) => setQuery(e.target.value)}
         className="md:w-xl"
       />
-      <Button variant="secondary" type="submit" onClick={onClick}>
+      <Button
+        variant="secondary"
+        type="submit"
+        onClick={onClick}
+        disabled={!query}
+      >
         <IconSearch />
       </Button>
     </form>

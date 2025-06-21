@@ -1,12 +1,14 @@
+import { cn } from "@/lib/utils";
 import { Badge } from "../ui/badge";
 
 interface PriceProps {
   price: number;
+  className?: string;
 }
 
-const Price = ({ price }: PriceProps) => {
+const Price = ({ price, className }: PriceProps) => {
   return (
-    <Badge className="font-bold text-lg" variant="secondary">
+    <Badge className={cn("font-bold text-lg", className)} variant="success">
       &#8377;{price}
     </Badge>
   );

@@ -11,18 +11,19 @@ import {
 
 import { Alert, AlertTitle } from "@/components/ui/alert";
 
+import { useCartStore } from "@/stores/cartStore";
 import { useUserStore } from "@/stores/userStore";
 import { IconAlertCircle, IconMinus, IconPlus } from "@tabler/icons-react";
 import Link from "next/link";
 import { useState } from "react";
 import { Button } from "../ui/button";
-import { useCartStore } from "@/stores/cartStore";
 
 interface AddToCartButtonProps {
   id: number;
+  stock: number;
 }
 
-const AddToCartButton = ({ id }: AddToCartButtonProps) => {
+const AddToCartButton = ({ id, stock }: AddToCartButtonProps) => {
   const { user } = useUserStore();
   const { setCartItem, getCartItem } = useCartStore();
 
@@ -43,6 +44,10 @@ const AddToCartButton = ({ id }: AddToCartButtonProps) => {
       setCount((prev) => prev - 1);
     }
   };
+
+  if (!stock) {
+    return null;
+  }
 
   if (!user) {
     return (
@@ -78,14 +83,14 @@ const AddToCartButton = ({ id }: AddToCartButtonProps) => {
 
   if (count === 0) {
     return (
-      <Button variant="outline" onClick={increment}>
+      <Button variant="outline" onClick={increment} className="w-fit">
         Add
       </Button>
     );
   }
 
   return (
-    <div className="flex items-center gap-3 rounded-md  border  shadow-xs   dark:border-input ">
+    <div className="flex items-center gap-3 rounded-md border shadow-xs dark:border-input w-fit">
       <Button variant="ghost" onClick={decrement}>
         <IconMinus className="size-4" />
       </Button>

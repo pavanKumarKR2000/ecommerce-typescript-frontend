@@ -1,3 +1,4 @@
+import { cn } from "@/lib/utils";
 import {
   IconStarHalfFilled,
   IconStar,
@@ -6,9 +7,10 @@ import {
 
 interface RatingProps {
   rating: number;
+  className?: string;
 }
 
-const Rating = ({ rating }: RatingProps) => {
+const Rating = ({ rating, className }: RatingProps) => {
   return (
     <div className="flex items-center gap-2">
       <div className="flex gap-1">
@@ -48,7 +50,9 @@ const Rating = ({ rating }: RatingProps) => {
           <IconStar className="size-5" />
         )}
       </div>
-      {rating === 0 && <p className="text-xs">No ratings yet</p>}
+      {rating === 0 && (
+        <p className={cn("text-xs", className)}>No ratings yet</p>
+      )}
     </div>
   );
 };

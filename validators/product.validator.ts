@@ -16,8 +16,8 @@ export const createProductSchema = z.object({
     .positive({ message: "Price must be a positive number" }),
   stock: z.coerce
     .number()
-    .min(1, { message: "Stock is required" })
-    .positive({ message: "Stock must be a positive number" }),
+    .min(0, { message: "Stock is required" })
+    .nonnegative({ message: "Stock must be a positive number" }),
   brand: z
     .string()
     .min(1, { message: "Brand is required" })

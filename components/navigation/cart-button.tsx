@@ -13,7 +13,7 @@ const CartButton = () => {
       <Button variant="secondary" className="relative">
         <IconShoppingCart />
         {totalQuantity > 0 && (
-          <div className="absolute -right-2 -top-2 size-6 bg-blue-500 rounded-full flex items-center justify-center text-white text-xs">
+          <div className="absolute -right-3 -top-3 size-6 bg-blue-500 rounded-full flex items-center justify-center text-white text-xs">
             {totalQuantity}
           </div>
         )}
