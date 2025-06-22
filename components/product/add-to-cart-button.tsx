@@ -10,7 +10,6 @@ import {
 } from "@/components/ui/dialog";
 
 import { Alert, AlertTitle } from "@/components/ui/alert";
-
 import { useCartStore } from "@/stores/cartStore";
 import { useUserStore } from "@/stores/userStore";
 import { IconAlertCircle, IconMinus, IconPlus } from "@tabler/icons-react";
@@ -19,31 +18,38 @@ import { useState } from "react";
 import { Button } from "../ui/button";
 
 interface AddToCartButtonProps {
-  id: number;
+  productId: number;
+  productName: string;
+  productImage: string;
   stock: number;
 }
 
-const AddToCartButton = ({ id, stock }: AddToCartButtonProps) => {
+const AddToCartButton = ({
+  productId,
+  productName,
+  productImage,
+  stock,
+}: AddToCartButtonProps) => {
   const { user } = useUserStore();
   const { setCartItem, getCartItem, removeCartItem } = useCartStore();
 
   const [count, setCount] = useState(() => {
-    const cartItem = getCartItem(id);
+    const cartItem = getCartItem(productId);
 
     return cartItem ? cartItem.quantity : 0;
   });
 
   const increment = () => {
-    setCartItem(id, count + 1);
+    setCartItem(productId, productName, productImage, count + 1);
     setCount((prev) => prev + 1);
   };
 
   const decrement = () => {
     if (count > 0) {
       if (count === 1) {
-        removeCartItem(id);
+        removeCartItem(productId);
       } else {
-        setCartItem(id, count - 1);
+        setCartItem(productId, productName, productImage, count - 1);
       }
 
       setCount((prev) => prev - 1);

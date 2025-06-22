@@ -49,7 +49,12 @@ const ProductCard = ({ product }: ProductCardProps) => {
               Out of stock
             </Badge>
           )}
-          <AddToCartButton id={product.id} stock={product.stock} />
+          <AddToCartButton
+            productId={product.id}
+            productName={product.name}
+            productImage={product.images?.[0] || ""}
+            stock={product.stock}
+          />
         </div>
       </CardContent>
     </Card>

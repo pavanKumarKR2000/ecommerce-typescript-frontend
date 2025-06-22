@@ -53,7 +53,7 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
               </Badge>
             )}
           </div>
-          <AddToCartButton id={product.id} stock={product.stock} />
+          <AddToCartButton productId={product.id} stock={product.stock} />
         </CardContent>
       </Card>
     </div>

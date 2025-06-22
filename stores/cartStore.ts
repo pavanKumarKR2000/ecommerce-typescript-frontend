@@ -2,17 +2,24 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
 interface CartItem {
-  id: number;
+  productId: number;
+  productImage: string;
+  productName: string;
   quantity: number;
 }
 
 interface CartStore {
   cart: CartItem[] | [];
   totalQuantity: number;
-  setCartItem: (id: number, quantity: number) => void;
+  setCartItem: (
+    productId: number,
+    productName: string,
+    productImage: string,
+    quantity: number
+  ) => void;
   clearCartItem: () => void;
-  getCartItem: (id: number) => CartItem | undefined;
-  removeCartItem: (id: number) => void;
+  getCartItem: (productId: number) => CartItem | undefined;
+  removeCartItem: (productId: number) => void;
 }
 
 export const useCartStore = create<CartStore>()(
@@ -20,22 +27,34 @@ export const useCartStore = create<CartStore>()(
     (set, get) => ({
       cart: [],
       totalQuantity: 0,
-      getCartItem: (id: number) => {
-        const cartItem = get().cart.find((item) => item.id === id);
+      getCartItem: (productId: number) => {
+        const cartItem = get().cart.find(
+          (item) => item.productId === productId
+        );
         return cartItem;
       },
-      setCartItem: (id: number, quantity: number) =>
+      setCartItem: (
+        productId: number,
+        productName: string,
+        productImage: string,
+        quantity: number
+      ) =>
         set((state) => {
-          const cartItem = state.cart.find((item) => item.id === id);
+          const cartItem = state.cart.find(
+            (item) => item.productId === productId
+          );
           let newCart = [];
 
           if (cartItem) {
             newCart = [
-              ...state.cart.filter((item) => item.id !== id),
-              { id, quantity },
+              ...state.cart.filter((item) => item.productId !== productId),
+              { productId, productName, productImage, quantity },
             ];
           } else {
-            newCart = [...state.cart, { id, quantity }];
+            newCart = [
+              ...state.cart,
+              { productId, productName, productImage, quantity },
+            ];
           }
 
           let totalQuantity = 0;
@@ -48,8 +67,10 @@ export const useCartStore = create<CartStore>()(
 
           return { cart: newCart };
         }),
-      removeCartItem: (id: number) => {
-        const newCart = get().cart.filter((item) => item.id !== id);
+      removeCartItem: (productId: number) => {
+        const newCart = get().cart.filter(
+          (item) => item.productId !== productId
+        );
         let totalQuantity = 0;
 
         newCart.forEach((item) => {
