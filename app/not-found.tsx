@@ -8,8 +8,8 @@ const NotFoundPage = () => {
   return (
     <div className="h-screen flex items-center justify-center">
       <div className="flex flex-col items-center justify-center gap-4">
-        <IconError404 className="size-20" />
-        <h2 className="text-xl font-bold">
+        <IconError404 className="size-10" />
+        <h2 className="text-xl italic">
           Page you are looking for does not exist
         </h2>
         <Link href="/">
