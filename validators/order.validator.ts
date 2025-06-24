@@ -13,6 +13,7 @@ export const shippingAddressSchema = z.object({
   postalCode: z.coerce
     .number()
     .min(1, { message: "Postal code is required" })
+    .max(999999, { message: "Enter valid Postal code" })
     .positive({ message: "Postal code must be a positive number" }),
   state: z.string().min(1, { message: "State is required" }),
   city: z.string().min(1, { message: "City is required" }),

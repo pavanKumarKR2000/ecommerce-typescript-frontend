@@ -32,7 +32,7 @@ const TABLE_HEADINGS = [
 ];
 
 const ProductTable = ({ products }: ProductTableProps) => {
-  const [pending, startTransition] = useTransition();
+  const [isPending, startTransition] = useTransition();
   const [open, setOpen] = useState(false);
 
   const deleteProduct = (id: number) => {
@@ -82,7 +82,7 @@ const ProductTable = ({ products }: ProductTableProps) => {
               <DeleteDialog
                 title="Are you sure you want to delete this product?"
                 action={deleteProduct}
-                isLoading={pending}
+                isLoading={isPending}
                 open={open}
                 setOpen={setOpen}
                 id={product.id}

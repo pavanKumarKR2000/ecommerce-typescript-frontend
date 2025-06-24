@@ -12,12 +12,12 @@ const CheckoutCard = () => {
     <Card className="w-sm max-w-md p-0 overflow-hidden">
       <CardHeader hidden></CardHeader>
       <CardContent className="p-4 flex flex-col gap-3 items-center">
-        <p className="text-lg font-bold">
-          Subtotal
+        <div className="text-lg font-bold flex items-center gap-2">
+          <p>Subtotal</p>
           <Badge variant="success" className="text-lg">
             &#8377;{totalPrice}
           </Badge>
-        </p>
+        </div>
         <Link href="/shipping-address">
           <Button>Checkout</Button>
         </Link>

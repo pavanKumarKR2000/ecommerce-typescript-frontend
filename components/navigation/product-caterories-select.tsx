@@ -41,7 +41,7 @@ const ProductCategoriesSelect = () => {
         <SelectContent>
           {PRODUCT_CATEGORIES.map((item) => (
             <SelectItem key={item.id} value={item.name}>
-              {item.name}
+              {<item.icon />} {item.name}
             </SelectItem>
           ))}
         </SelectContent>

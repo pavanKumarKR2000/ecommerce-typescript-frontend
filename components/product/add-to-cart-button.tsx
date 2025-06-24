@@ -21,6 +21,7 @@ interface AddToCartButtonProps {
   productId: number;
   productName: string;
   productImage: string;
+  productPrice: number;
   stock: number;
 }
 
@@ -28,6 +29,7 @@ const AddToCartButton = ({
   productId,
   productName,
   productImage,
+  productPrice,
   stock,
 }: AddToCartButtonProps) => {
   const { user } = useUserStore();
@@ -40,7 +42,14 @@ const AddToCartButton = ({
   });
 
   const increment = () => {
-    setCartItem(productId, productName, productImage, count + 1);
+    setCartItem(
+      productId,
+      productName,
+      productImage,
+      productPrice,
+      stock,
+      count + 1
+    );
     setCount((prev) => prev + 1);
   };
 
@@ -49,7 +58,14 @@ const AddToCartButton = ({
       if (count === 1) {
         removeCartItem(productId);
       } else {
-        setCartItem(productId, productName, productImage, count - 1);
+        setCartItem(
+          productId,
+          productName,
+          productImage,
+          productPrice,
+          stock,
+          count - 1
+        );
       }
 
       setCount((prev) => prev - 1);

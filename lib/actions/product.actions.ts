@@ -49,11 +49,11 @@ export const updateProduct = async (id: number, product: any) => {
   }
 };
 
-export const getProducts = async () => {
+export const getProducts = async (category = "", query = "") => {
   try {
     const token = (await cookies()).get("accessToken")?.value;
 
-    const res = await api.get("/products", {
+    const res = await api.get(`/products?category=${category}&query=${query}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

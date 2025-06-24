@@ -53,6 +53,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
             productId={product.id}
             productName={product.name}
             productImage={product.images?.[0] || ""}
+            productPrice={product.price}
             stock={product.stock}
           />
         </div>
