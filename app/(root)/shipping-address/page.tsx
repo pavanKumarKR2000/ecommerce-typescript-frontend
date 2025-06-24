@@ -1,12 +1,13 @@
+import ShippingAddressContainer from "@/components/order/shipping-address-container";
 import ShippingAddressForm from "@/components/order/shipping-address-form";
+import ShippingAddressSelectCard from "@/components/order/shipping-address-select-card";
 
-const ShippingAddress = () => {
-  return (
-    <div className="space-y-6">
-      <h2 className="font-bold text-2xl">Shipping address</h2>
-      <ShippingAddressForm />
-    </div>
-  );
+import { getShippingAddressesOfUser } from "@/lib/actions/shipping-address.actions";
+
+const ShippingAddressPage = async () => {
+  const res = await getShippingAddressesOfUser();
+
+  return <ShippingAddressContainer addresses={res?.data} />;
 };
 
-export default ShippingAddress;
+export default ShippingAddressPage;

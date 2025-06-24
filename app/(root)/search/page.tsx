@@ -1,7 +1,9 @@
+import { Badge } from "@/components/ui/badge";
+
 interface SearchPageProps {
   searchParams: Promise<{
     q?: string;
-    category?: string;
+    c?: string;
     price?: string;
     rating?: string;
     sort?: string;
@@ -10,9 +12,30 @@ interface SearchPageProps {
 }
 
 const SearchPage = async (props: SearchPageProps) => {
-  const { q } = await props.searchParams;
+  const { q, c } = await props.searchParams;
 
-  return <div>{q}</div>;
+  return (
+    <div className="space-y-4">
+      <div className="flex items-center gap-4">
+        {q && (
+          <p className="flex items-center gap-1">
+            Search
+            <Badge variant="success" className="text-md">
+              {q}
+            </Badge>
+          </p>
+        )}
+        {c && (
+          <p className="flex items-center gap-1">
+            Category
+            <Badge variant="success" className="text-md">
+              {c}
+            </Badge>
+          </p>
+        )}
+      </div>
+    </div>
+  );
 };
 
 export default SearchPage;
