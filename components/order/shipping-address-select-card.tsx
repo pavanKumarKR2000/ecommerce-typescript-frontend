@@ -27,15 +27,20 @@ const ShippingAddressSelectCard = ({
               addressId === item.id && "ring-2 ring-blue-500 ring-offset-2",
             )}
             key={item.id}
+            onClick={() => setAddressId(item.id)}
           >
             <CardHeader hidden></CardHeader>
             <CardContent className="p-4 ">
               <div className="flex flex-col items-start gap-1">
-                {addressId === item.id && (
-                  <div className="self-end bg-blue-500 p-1 rounded-full ">
-                    <IconCheck className="text-white size-4" />
-                  </div>
-                )}
+                <div
+                  className={cn(
+                    "self-end bg-blue-500 p-1 rounded-full",
+                    addressId === item.id ? "visible" : "invisible",
+                  )}
+                >
+                  <IconCheck className="text-white size-4" />
+                </div>
+
                 <p>{item.name}</p>
                 <p>{item.state}</p>
                 <p>{item.city}</p>

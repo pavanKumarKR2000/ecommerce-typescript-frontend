@@ -35,6 +35,7 @@ const SearchProduct = () => {
   useEffect(() => {
     if (!q) {
       setQuery("");
+      setShow(true);
     }
   }, [searchParams]);
 
@@ -87,7 +88,7 @@ const SearchProduct = () => {
       </Button>
       <div
         className={cn(
-          "absolute h-6  overflow-hidden ml-[85px] cursor-text",
+          "absolute h-6  overflow-hidden ml-[85px] cursor-text  w-full",
           !show && "hidden",
         )}
         onClick={() => {

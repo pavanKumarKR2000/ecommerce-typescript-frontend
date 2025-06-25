@@ -13,10 +13,12 @@ const NavigationBar = () => {
       <div className="flex items-center justify-between container mx-auto py-4 px-2 md:px-0">
         <Link href="/">
           <div className="flex items-center gap-2">
+            <div className="bg-black dark:bg-white text-white dark:text-black p-2 rounded-full!">
+              <IconShoppingBag />
+            </div>
             <h2 className="text-2xl font-bold leading-0! hidden md:inline-flex">
               E-STORE
             </h2>
-            <IconShoppingBag />
           </div>
         </Link>
         <div className="flex items-center gap-4">

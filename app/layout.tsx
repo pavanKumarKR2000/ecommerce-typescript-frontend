@@ -1,11 +1,11 @@
 import { Toaster } from "@/components/ui/sonner";
 import type { Metadata } from "next";
 import { ThemeProvider } from "next-themes";
-import { Rubik, Tilt_Neon } from "next/font/google";
+import { Rubik, Roboto } from "next/font/google";
 import localFont from "next/font/local";
 
 import "./globals.css";
-const font = Tilt_Neon({
+const font = Roboto({
   subsets: ["latin"],
 });
 

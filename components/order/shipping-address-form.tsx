@@ -165,7 +165,10 @@ const ShippingAddressForm = ({
       {addresses.length > 0 && (
         <>
           <p>or</p>
-          <Button onClick={() => setShowShippingAddressForm(false)}>
+          <Button
+            onClick={() => setShowShippingAddressForm(false)}
+            disabled={isPending}
+          >
             Select address
           </Button>
         </>
