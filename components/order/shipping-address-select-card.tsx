@@ -40,7 +40,6 @@ const ShippingAddressSelectCard = ({
                 >
                   <IconCheck className="text-white size-4" />
                 </div>
-
                 <p>{item.name}</p>
                 <p>{item.state}</p>
                 <p>{item.city}</p>
